@@ -22,6 +22,7 @@ The goals / steps of this project are the following:
 [camera_undist]: ./output_images/undistorted/calibration2.jpg "Undistorted"
 [test1_org]: ./test_images/test1.jpg "Distorted"
 [test1_undist]: ./output_images/undistorted/test1.jpg "Undistorted"
+[color_grad]: ./files/color_and_grad.png "binarized"
 
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
@@ -111,16 +112,20 @@ undist_image = cv2.undistort(img, mtx, dist, None, mtx)
 ###Pipeline (single images)
 
 ####1. Provide an example of a distortion-corrected image.
-The folowing is the result of applying the undistortion transformation to a test image.
+The following is the result of applying the undistortion transformation to a test image.
 - Original Image
 ![alt text][test1_org]
 - Undistortion Image
 ![alt text][test1_undist]
 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
-![alt text][image3]
+The code for this step is contained in the 5th code cell of the IPython notebook located in "./project_main.ipynb "     
+I used HLS space for color thresholding. At first I was using only S(saturation) channel.     
+But I could not prevent false detection of shadow of "test 5.jpg". And I noticed that the L(Lighting) channel does not detect shadows, so I decided to take a logical AND of S chalnel and L channel. By taking the logical OR of Sx, it was possible to detect the line more beautifully.     
+The follow is result. Red is L channel, Blue is S channle and Green is Sx gradient channel.
+
+![alt text][color_grad]
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
