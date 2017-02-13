@@ -167,8 +167,10 @@ In addition, I used ROI to prevent false detection of garbage. The following is 
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-The code for this step is contained in the 10th,12th code cell of the IPython notebook located in "./project_main.ipynb ".
-Input an image of the lane candidate in `get_masked_lane_image`, divide 6 zones and take a mask with a rectangle of `center_point` and `width` in `get_sliding_window`. This `width` is +/- 300 pixel and `center_point` is updated by histogram in the window.
+The code for this step is contained in the 10th,12th code cell of the IPython notebook located in "./project_main.ipynb".
+
+Input the image of the lane candidate in `get_masked_lane_image`, divide 6 zones and take the mask with a rectangle of `center_point` and `width` in `get_sliding_window`.     
+This `width` is +/- 300 pixel and `center_point` is updated by histogram in the window.
 
 ~~~~
 [10th cell]
@@ -203,7 +205,7 @@ def get_masked_lane_image(binary,center_point,width):
 
 I extracted the following mask image.
 
-![alt text][test_fit_mask]
+![alt text][test2_fit_mask]
 
 Input the masked image of the lane candidate in `Line::update()`, and calculate the polynomial from all x,y points.
 These coefficients are calculated in the world space.
@@ -227,7 +229,7 @@ def Line::update(self,lane):
             + self.current_fit_coeffs[1]*fit_yvals + self.current_fit_coeffs[2]) / xm_per_pix
             
 ~~~~
-![alt text][test_fit]
+![alt text][test2_fit]
 
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
