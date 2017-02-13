@@ -280,6 +280,7 @@ Here's a [link to my video result](./processed_project_video.mp4)
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
-
+First, the lane lines could not be detected due to the brightness or shadow of the road.
+In creating thresholded binary image, I changed thresholds variously, but it did not work.
+As mentioned above, I solved it by adding L channel.
+Next, I faild about calculating the average value in `Line` class. I could not detect that the direction changed and the expected line got out of the road. When the expected line changed drastically, it worked well by using the latest value without using past values.　Compared with deep learning of the previous project, OpenCV can not respond flexibly to various cases. Sensor fusion combining these is a future task.
