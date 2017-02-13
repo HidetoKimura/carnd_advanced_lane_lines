@@ -158,7 +158,8 @@ This resulted in the following source and destination points:
 | 698, 457      | 995, 0        |
 | 1145, 720     | 995, 720      |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+I drew a red line on the image of `src` and checked whether it becomes a rectangle after perspective transformation.
+In addition, I used ROI to prevent false detection of garbage. The following is result.
 
 ![alt text][warped]
 
