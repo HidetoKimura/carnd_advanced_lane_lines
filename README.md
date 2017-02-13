@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [camera_undist]: ./output_images/undistorted/calibration2.jpg "Undistorted"
 [test1_org]: ./test_images/test1.jpg "Distorted"
 [test1_undist]: ./output_images/undistorted/test1.jpg "Undistorted"
-[color_grad]: ./files/color_grad.png "binarized"
+[color_grad]: ./files/color_and_grad.png "binarized"
 
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
@@ -121,7 +121,7 @@ The following is the result of applying the undistortion transformation to a tes
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 The code for this step is contained in the 5th code cell of the IPython notebook located in "./project_main.ipynb " 
-I used HLS space for color thresholding. At first I was using only S(saturation) channel. But I could not prevent false detection of shadow of "test 5.jpg". And I noticed that the L(Lighting) channel does not detect shadows, so I decided to take a logical AND of S chalnel and L channel. By taking the logical OR of Sx, it was possible to detect the line more beautifully. The follow is result.
+I used HLS space for color thresholding. At first I was using only S(saturation) channel. But I could not prevent false detection of shadow of "test 5.jpg". And I noticed that the L(Lighting) channel does not detect shadows, so I decided to take a logical AND of S chalnel and L channel. By taking the logical OR of Sx, it was possible to detect the line more beautifully. The follow is result. Red is L channel, Blue is S channle and Green is Sx gradient channel.
 
 ![alt text][color_grad]
 
