@@ -23,6 +23,7 @@ The goals / steps of this project are the following:
 [test1_org]: ./test_images/test1.jpg "Distorted"
 [test1_undist]: ./output_images/undistorted/test1.jpg "Undistorted"
 [color_grad]: ./files/color_and_grad.png "binarized"
+[warped]: ./files/warped.png "warped"
 
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
@@ -129,33 +130,38 @@ The follow is result. Red is L channel, Blue is S channle and Green is Sx gradie
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+My perspective transform includes a function called `warp()`. The code for this step is contained in the 7th code cell of the IPython notebook located in "./project_main.ipynb ". 
 
 ```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-
+def warp(img,tobird=True):
+    corners = np.float32([[190,720],[589,457],[698,457],[1145,720]])
+    new_top_left=np.array([corners[0,0],0])
+    new_top_right=np.array([corners[3,0],0])
+    offset=[150,0]
+    
+    img_size = (img.shape[1], img.shape[0])
+    src = np.float32([corners[0],corners[1],corners[2],corners[3]])
+    dst = np.float32([corners[0]+offset,new_top_left+offset,new_top_right-offset ,corners[3]-offset])    
+    if tobird:
+        M = cv2.getPerspectiveTransform(src, dst)
+    else:
+        M = cv2.getPerspectiveTransform(dst,src)
+    warped = cv2.warpPerspective(img, M, img_size , flags=cv2.INTER_LINEAR)    
+    return warped, M
 ```
 This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 190, 720      | 340, 720      | 
+| 589, 457      | 340, 0        |
+| 698, 457      | 995, 0        |
+| 1145, 720     | 995, 720      |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+I drew a red line on the image of `src` and checked whether it becomes a rectangle after perspective transformation.
+In addition, I used ROI to prevent false detection of garbage. The following is result.
 
-![alt text][image4]
+![alt text][warped]
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
