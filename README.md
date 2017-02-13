@@ -26,12 +26,8 @@ The goals / steps of this project are the following:
 [warped]: ./files/warped.png "warped"
 [test2_fit_mask]: ./files/test2_fit_mask.png "masked"
 [test2_fit]: ./files/test2_fit.png "fit"
+[image_result]: ./files/image_result.png "image result"
 
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -258,9 +254,17 @@ The center of the image is set to 670.
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+The code for this step is contained in the 15th,16th,17th code cell of the IPython notebook located in "./project_main.ipynb".
 
-![alt text][image6]
+"process_image()" passes through the pipeline as explained above and gets `fit lines`.
+"project_lane_lines()" projects `fit lines` and combines it into the original image.
+
+~~~~
+def project_lane_lines(img,left_fitx,right_fitx,yvals):
+def process_image(img):
+~~~~~
+
+![alt text][image_result]
 
 ---
 
@@ -268,7 +272,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./processed_project_video.mp4)
 
 ---
 
