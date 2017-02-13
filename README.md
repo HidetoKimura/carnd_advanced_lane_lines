@@ -238,6 +238,8 @@ The code for this step is contained in the 12th code cell of the IPython noteboo
 The calcuration is summarized in [this tutorial here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php).  
 For a second order polynomial f(y)=A y^2 +B y + C the radius of curvature is given by R = [(1+(2 Ay +B)^2 )^3/2]/|2A|.
 
+Since I already have the coefficient in world space, I can get the position with the lowest y coordinate.    
+The center of the image is set to 670.
 ~~~~
         y_eval = max(fit_yvals)
 
