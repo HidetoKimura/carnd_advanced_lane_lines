@@ -24,6 +24,8 @@ The goals / steps of this project are the following:
 [test1_undist]: ./output_images/undistorted/test1.jpg "Undistorted"
 [color_grad]: ./files/color_and_grad.png "binarized"
 [warped]: ./files/warped.png "warped"
+[test2_fit_mask]: ./files/test2_fit_mask.png "masked"
+[test2_fit]: ./files/test2_fit.png "fit"
 
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
@@ -165,9 +167,68 @@ In addition, I used ROI to prevent false detection of garbage. The following is 
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The code for this step is contained in the 10th,12th code cell of the IPython notebook located in "./project_main.ipynb ".
+Input an image of the lane candidate in `get_masked_lane_image`, divide 6 zones and take a mask with a rectangle of `center_point` and `width` in `get_sliding_window`. This `width` is +/- 300 pixel and `center_point` is updated by histogram in the window.
 
-![alt text][image5]
+~~~~
+[10th cell]
+def get_sliding_window(img,center_point,width, thresh=10000):
+    """
+    function: Mask the rectangle and line candidate specified by center, width, 
+              and extract the sliding window.
+    input: img,center_point,width,thresh
+        img: binary 3 channel image
+        center_point: center of window
+        width: width of window
+        [opt]thresh : threshold of histogram
+    
+    output: masked,center_point
+        masked : a masked image of the same size. mask is a window centered at center_point
+        center : the mean of all pixels found within the window
+    """
+
+def get_masked_lane_image(binary,center_point,width):
+    """
+    function: Integrate the sliding windows and take out the masked image.
+    input: binary,center_point,width
+        binary: binary 3 channel image
+        center_point: center of window
+        width: width of window
+    
+    output: window_image
+        window_image : a masked image of the same size. mask is a window centered at center_point
+    """
+
+~~~~
+
+I extracted the following mask image.
+
+![alt text][test_fit_mask]
+
+Input the masked image of the lane candidate in `Line::update()`, and calculate the polynomial from all x,y points.
+These coefficients are calculated in the world space.
+~~~~
+[12th cell]
+def Line::update(self,lane):
+        self.ally,self.allx = (lane[:,:,0]>254).nonzero()
+ 
+        # Define conversions in x and y from pixels space to meters
+        ym_per_pix = 35.0/720 # meters per pixel in y dimension
+        xm_per_pix = 3.7/700 # meters per pixel in x dimension
+
+        # Fit new polynomials to x,y in world space
+        yvals = self.ally*ym_per_pix
+        xvals = self.allx*xm_per_pix
+        self.current_fit_coeffs = np.polyfit(yvals, xvals, 2)
+
+        # Calculate xvals
+        fit_yvals = self.fit_yvals * ym_per_pix       
+        self.current_fit_xvals = (self.current_fit_coeffs[0]*fit_yvals**2 \
+            + self.current_fit_coeffs[1]*fit_yvals + self.current_fit_coeffs[2]) / xm_per_pix
+            
+~~~~
+![alt text][test_fit]
+
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
