@@ -20,6 +20,9 @@ The goals / steps of this project are the following:
 [camera_org]: ./camera_cal/calibration2.jpg "Distorted"
 [camera_corner]: ./output_images/couners_found/calibration2.jpg "Counersfound"
 [camera_undist]: ./output_images/undistorted/calibration2.jpg "Undistorted"
+[test1_org]: ./test_images/test1.jpg "Distorted"
+[test1_undist]: ./output_images/undistorted/test1.jpg "Undistorted"
+
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
@@ -35,7 +38,7 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
-I used a jupyter notebook in this project. Because in this project to do data analysis and visualization is very important.
+I used [this jupyter notebook](https://github.com/HidetoKimura/carnd_advanced_lane_lines/blob/master/project_main.ipynb) in this project. Because in this project to do data analysis and visualization is very important.
 Here is the file structures.
 
 ### File Structures
@@ -108,8 +111,12 @@ undist_image = cv2.undistort(img, mtx, dist, None, mtx)
 ###Pipeline (single images)
 
 ####1. Provide an example of a distortion-corrected image.
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+The folowing is the result of applying the undistortion transformation to a test image.
+- Original Image
+![alt text][test1_org]
+- Undistortion Image
+![alt text][test1_undist]
+
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
