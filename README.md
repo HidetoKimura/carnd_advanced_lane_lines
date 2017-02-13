@@ -234,7 +234,25 @@ def Line::update(self,lane):
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The code for this step is contained in the 12th code cell of the IPython notebook located in "./project_main.ipynb".
+The calcuration is summarized in [this tutorial here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php).  
+For a second order polynomial f(y)=A y^2 +B y + C the radius of curvature is given by R = [(1+(2 Ay +B)^2 )^3/2]/|2A|.
+
+~~~~
+        y_eval = max(fit_yvals)
+
+        # Calculate the new radii of curvature
+        self.radius_of_curvature = ((1 + (2*self.current_fit_coeffs[0]*y_eval + self.current_fit_coeffs[1])**2)**1.5) \
+                         /np.absolute(2*self.current_fit_coeffs[0])
+
+        # Calculate the line base position
+        line_base_pos = self.current_fit_coeffs[0]*y_eval**2 \
+                        + self.current_fit_coeffs[1]*y_eval \
+                        + self.current_fit_coeffs[2]
+        self.line_pix_pos = line_base_pos / xm_per_pix
+        center_pos = 670 * xm_per_pix
+        self.line_base_pos = (line_base_pos - center_pos)
+~~~~
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
